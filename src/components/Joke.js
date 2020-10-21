@@ -6,7 +6,7 @@ function Joke(props){
             
             <h1 style={{display:props.question ? "block" : "None "}}>Question: {props.question}</h1>
             <br></br>
-            Punchline: {props.punchline}
+            Punchline: {props.punchLine}
             <br></br>
             <br></br>
         </div>

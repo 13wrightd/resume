@@ -1,11 +1,13 @@
 import React from "react"
 import Joke from "./components/Joke.js"
+import jokesData from "./data/jokesData.js"
 function App(){
+  var jokesComponents = jokesData.map(function(joke){
+    return(<Joke key = {joke.id} question={joke.question} punchLine={joke.punchLine}/>)
+  })
   return (
     <div>
-      <Joke question="Whats 9 + 10?" punchline="21."/>
-      <Joke question="Why do we tell actors to break a leg?" punchline="Because every play has a cast."/>
-      <Joke punchline="It's hard to explain puns to kleptopmaniacs because they always take things literally."/>
+      {jokesComponents}
     </div>
   )
 }
