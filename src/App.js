@@ -1,15 +1,11 @@
-import React from "react";
-import NavBar from "./components/NavBar.js";
-import MainContent from "./components/MainContent.js";
-import Footer from "./components/Footer.js";
+import React from "react"
+import ToDoList from "./components/ToDoList.js"
 function App(){
   return (
     <div>
-      <NavBar />
-      <MainContent />
-      <Footer />
+      <ToDoList />
     </div>
   )
 }
 
-export default App;
+export default App
