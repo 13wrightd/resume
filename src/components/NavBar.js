@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-function NavBar() {
+function NavBar(props) {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -39,25 +39,26 @@ function NavBar() {
       <div className={classes.root}>
         <AppBar  position="static">
           <Toolbar>
-            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-              <MenuIcon onClick={handleClick} />
-              <Menu
-        id="simple-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <MenuItem onClick={handleClose}>Resume</MenuItem>
-        <MenuItem onClick={handleClose}>Projects</MenuItem>
-        <MenuItem onClick={handleClose}>About</MenuItem>
-      </Menu>
+            <IconButton edge="start" onClick={handleClick} className={classes.menuButton} color="inherit" aria-label="menu">
+                <MenuIcon />
             </IconButton>
+            <Menu 
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+            >
+                <MenuItem onClick={handleClose}>Resume</MenuItem>
+                <MenuItem onClick={handleClose}>Projects</MenuItem>
+                <MenuItem onClick={handleClose}>About</MenuItem>
+            </Menu>
+                    
             <Typography variant="h6" className={classes.title}>
               Daniel Wright
             </Typography>
             <Typography allign="right"> <ScreenSize/></Typography>
-            <Button color="inherit">Login</Button>
+            <Button onClick={()=>props.setShowLoginPage(!props.showLoginPage)} color="inherit">Login</Button>
           </Toolbar>
         </AppBar>
       </div>
