@@ -4,3 +4,6 @@
 .list1 {
   list-style-type: none;
 }
+body {
+  margin: "0px";
+}
