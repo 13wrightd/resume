@@ -9,6 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ScreenSize from "./ScreenSize.js"
+import FormComponent from "./FormComponent.js"
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -58,7 +59,8 @@ function NavBar(props) {
               Daniel Wright
             </Typography>
             <Typography allign="right"> <ScreenSize/></Typography>
-            <Button onClick={()=>props.setShowLoginPage(!props.showLoginPage)} color="inherit">Login</Button>
+            {/* <Button onClick={()=>props.setShowLoginPage(!props.showLoginPage)} color="inherit">Login</Button> */}
+            <FormComponent/>
           </Toolbar>
         </AppBar>
       </div>
