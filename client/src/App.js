@@ -21,16 +21,42 @@ class App extends React.Component{
     super()
     this.state={
       darkMode:false,
-      showLoginPage:false
+      showLoginPage:false,
+      response: '',
+      post: '',
+      responseToPost: ''
     }
+    this.setDarkMode = this.setDarkMode.bind(this)
+    this.setShowLoginPage = this.setShowLoginPage.bind(this)
   }
   setDarkMode(){
-    this.setState({darkMode:!this.state.darkMode})
+    this.setState((state)=>{
+      console.log(state)
+      return (
+      {
+        darkMode:!state.darkMode
+      })
+    }
+  )
+    
   }
   setShowLoginPage(){
-    this.setState({showLoginPage:!this.state.showLoginPage})
+    this.setState((state)=> {return ({showLoginPage:!state.showLoginPage})})
+  }
+  componentDidMount() {
+    this.callApi()
+      .then(res => this.setState({ response: res.express }))
+      .catch(err => console.log(err,"error error!"));
+  }
+  callApi = async () => {
+    const response = await fetch('/api/hello');
+    const body = await response.json();
+    if (response.status !== 200) throw Error(body.message);
+    
+    return body;
   }
   render(){
+    console.log(this.state.response)
     const theme = createMuiTheme({
         palette: {
           type: this.state.darkMode ? "dark" : "light",
@@ -42,9 +68,9 @@ class App extends React.Component{
         <NavBar showLoginPage={this.state.showLoginPage} setShowLoginPage={this.setShowLoginPage}/>
         <Paper elevation={24} >
         {this.state.showLoginPage ? <Paper>login <Login /></Paper>: null}
-        <Switch checked={this.state.darkMode} onChange={()=> this.setDarkMode()} />
+        <Switch checked={this.state.darkMode} onChange={this.setDarkMode} />
         <Typography variant="h1">hey 1</Typography>
-        <Button  onClick={()=>this.setShowLoginPage()} color="primary" variant="contained"> s</Button>
+        <Button  onClick={this.setShowLoginPage} color="primary" variant="contained"> s</Button>
         <p>hey 2</p>
         <p>hey 3</p>
         <p>hey 4</p>
