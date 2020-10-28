@@ -5,8 +5,12 @@ import { Box, Button, Switch, Paper, Typography } from "@material-ui/core/"
 import NavBar from "./components/NavBar.js"
 import Login from "./components/Login.js"
 import FormComponent from "./components/FormComponent.js"
-import { ThemeProvider, useTheme, createMuiTheme } from '@material-ui/core/styles';
+import Test from "./components/Test.js"
+import Test2 from "./components/Test2.js"
+import { ThemeProvider, useTheme } from '@material-ui/core/styles';
 import { light } from "@material-ui/core/styles/createPalette"
+// import createMuiTheme from '@material-ui/core/styles';
+import { unstable_createMuiStrictModeTheme as createMuiTheme } from '@material-ui/core';
 
 
 class App extends React.Component{
@@ -75,6 +79,8 @@ class App extends React.Component{
         <p>hey 3</p>
         <p>hey 4</p>
         <p>hey 5</p>
+        <Test/>
+        <Test2/>
         
       
         </Paper>

@@ -1,10 +1,10 @@
 import React, { useState } from "react"
 
 function Test2(){
-    const [testvar, setTestvar] = React.useState("Hello");
+    const [open, setOpen] = React.useState("bye");
     return(
         <div>
-            {open}
+{open}
         </div>
     )
 }

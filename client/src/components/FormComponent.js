@@ -47,11 +47,11 @@ export default function FormComponent() {
           />
         </DialogContent>
         <DialogActions>
-        <div style={{flex: '1 0 0'}} >
+        {/* <div style={{flex: '1 0 0'}} > */}
             <Button  onClick={handleClose} color="primary">
                 Cancel
             </Button>
-            </div>
+            {/* </div> */}
             <Button onClick={handleClose} color="primary">
                 Sign up
             </Button>
