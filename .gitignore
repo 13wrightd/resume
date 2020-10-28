@@ -6,6 +6,9 @@
 /client/.pnp.js
 /node_modules
 
+#config
+config.js
+
 # testing
 /coverage
 
