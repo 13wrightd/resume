@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 
-// DB connect
+// DB connect 
 var mongoose = require('mongoose');
 var dbString=require("./config.js")
 console.log(dbString)
