@@ -4,10 +4,11 @@ const bodyParser = require('body-parser');
 
 // DB connect 
 var mongoose = require('mongoose');
-var dbString=require("./config.js")
-console.log(dbString)
+const dbString = require("./config.js")
 
-mongoose.connect(dbString);
+mongoose.connect(dbString, { useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
@@ -17,19 +18,51 @@ db.once('open', function() {
 var User = require('./models/User.js');
 
 // var a = new User({
-//   id:34,
-//   username:'dannyboy2',
-//   password:'pass',
+//   id:uuid4,
+//   username:'dan',
+//   password:hashh,
 // })
 // a.save()
-User.findOne({id:34 }, function (err, docs) { 
+
+// bcrypt
+const bcrypt = require('bcrypt');
+bcrypt.hash('myPassword', 10, function(err, hash) {
+  // Store hash in database
+  var uuid = require('uuid');
+
+let uuid4 = uuid.v4();
+console.log(uuid4)
+  var a = new User({
+    id:uuid4,
+    username:'dan',
+    password:hash,
+  })
+  a.save()
+});
+
+
+var test
+User.findOne({id:1 }, function (err, docs) { 
   if (err){ 
       console.log(err) 
   } 
   else{ 
-      console.log("Result : ", docs); 
-      docs.username="test22"
-      docs.save()
+      test=docs.password
+      // docs.username="test22"
+      // docs.save()
+      console.log("saved hash")
+      console.log(docs.password)
+      bcrypt.compare('myPasxsword', docs.password, function(err, res) {
+        if(res) {
+         // Passwords match
+         console.log("they match")
+
+        } else {
+         // Passwords don't match
+        } 
+      });
+
+
   } 
 }); 
 
@@ -45,7 +78,8 @@ const port = process.env.PORT || 5000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/api/hello', (req, res) => {
+app.post('/api/hello', (req, res) => {
+  console.log(req.body)
   res.send({ express: 'Hello From Express' });
 });
 
