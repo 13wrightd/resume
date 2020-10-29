@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 // Create the schema for the Account database
 const userSchema = new Schema({
   id: { type: String, required: true, unique: true },  
-  username: { type: String, required: true, unique: false },
+  email: { type: String, required: true, unique: true },
   password: { type: String, required: true, unique: false },
   created_on: { type: Date, default: Date.now, required: false, unique: false },
   updated_on: { type: Date, required: false, unique: false },

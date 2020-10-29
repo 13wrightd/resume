@@ -16,47 +16,97 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 //   return body;
 // }}
 
-
+let textInput = React.createRef();
 export default function FormComponent() {
   const [open, setOpen] = React.useState(false);
   const [status, setStatus] = React.useState('idle');
-
+  const [password, setPassword] = React.useState('');
+  const [email, setEmail] = React.useState('')
   const handleClickOpen = () => {
     setOpen(true);
   };
+  const handleChange = (event) => {
+    console.log(event.target.value)
+    if(event.target.name=="email"){
+      setEmail(event.target.value)
+    }
+    else if(event.target.name=="password"){
+      setPassword(event.target.value)
+    }
+    
 
-  const handleClose = () => {
+  }
+  const handleClose = (event) => {
+    console.log("event")
+    //setName(event.currentTarget.name)
+    console.log(event.currentTarget.name)
+    if(event.currentTarget.name=="signup"){
+        console.log("signup fetch")
+        signUpFetch()
+    }
+    else if(event.currentTarget.name=="login"){
+      console.log("login fetch")
+      logInFetch()
+  }
+    
     setOpen(false)
+    
 
-  };
-  useEffect(() => {
-    const fetchData = async () => {
-        setStatus('fetching');
-        const response = await fetch(
-            "/api/hello", 
+  }
+  const signUpFetch = async () => {
+    setStatus('fetching');
+    const response = await fetch(
+        "/api/signup", 
 
-            {
-              method: "post",
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-            
-              //make sure to serialize your JSON body
-              body: JSON.stringify({
-                name: "name",
-                password: "myPassword"
-              })
-            }
-        );
-        const data = await response.json();
-        // setData(data.hits);
-        // setStatus('fetched');
-        console.log(data)
-    };
+        {
+          method: "post",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+        
+          //make sure to serialize your JSON body
+          body: JSON.stringify({
+            email: email,
+            password: password
+          })
+        }
+    );
+    const data = await response.json();
+    // setData(data.hits);
+    // setStatus('fetched');
+    console.log(data)
+};
 
-    fetchData();
-}, [open]);
+const logInFetch = async () => {
+  setStatus('fetching');
+  const response = await fetch(
+      "/api/login", 
+
+      {
+        method: "post",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+      
+        //make sure to serialize your JSON body
+        body: JSON.stringify({
+          email: email,
+          password: password
+        })
+      }
+  );
+  const data = await response.json();
+  // setData(data.hits);
+  // setStatus('fetched');
+  console.log(data)
+};
+//   useEffect(() => {
+    
+
+//     fetchData();
+// }, []);
   return (
     <div>
       <Button color="inherit" onClick={handleClickOpen}>
@@ -72,29 +122,35 @@ export default function FormComponent() {
             autoFocus
             margin="dense"
             id="email address"
+            name="email"
             label="Email Address"
             type="email"
+            onChange={handleChange}
+            value={email}
             fullWidth
           />
           <TextField
             
             margin="dense"
             id="password"
+            name="password"
             label="Password"
             type="password"
+            onChange={handleChange}
+            value={password}
             fullWidth
           />
         </DialogContent>
         <DialogActions>
         {/* <div style={{flex: '1 0 0'}} > */}
-            <Button  onClick={handleClose} color="primary">
+            <Button name="cancel" onClick={handleClose} color="primary">
                 Cancel
             </Button>
             {/* </div> */}
-            <Button onClick={handleClose} color="primary">
+            <Button name="signup" onClick={handleClose} color="primary">
                 Sign up
             </Button>
-            <Button variant="contained" onClick={handleClose} color="primary">
+            <Button  name="login" variant="contained" onClick={handleClose} color="primary">
                 Log in
             </Button>
         </DialogActions>
