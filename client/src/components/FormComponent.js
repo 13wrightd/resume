@@ -16,7 +16,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 //   return body;
 // }}
 
-let textInput = React.createRef();
 export default function FormComponent() {
   const [open, setOpen] = React.useState(false);
   const [status, setStatus] = React.useState('idle');
@@ -47,7 +46,11 @@ export default function FormComponent() {
     else if(event.currentTarget.name=="login"){
       console.log("login fetch")
       logInFetch()
-  }
+    }
+    else if(event.currentTarget.name=="cancel"){
+      console.log("cancel fetch")
+      cancelFetch()
+    }
     
     setOpen(false)
     
@@ -78,12 +81,39 @@ export default function FormComponent() {
     console.log(data)
 };
 
+const cancelFetch = async () => {
+  setStatus('fetching');
+  const response = await fetch(
+      "/api/private", 
+
+      {
+        credentials: 'include',
+        method: "post",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+      
+        //make sure to serialize your JSON body
+        body: JSON.stringify({
+          email: email,
+          password: password
+        })
+      }
+  );
+  const data = await response.json();
+  // setData(data.hits);
+  // setStatus('fetched');
+  console.log(data)
+};
+
 const logInFetch = async () => {
   setStatus('fetching');
   const response = await fetch(
       "/api/login", 
 
       {
+        credentials: 'include',
         method: "post",
         headers: {
           'Accept': 'application/json',
