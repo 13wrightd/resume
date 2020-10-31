@@ -16,11 +16,12 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 //   return body;
 // }}
 
-export default function FormComponent() {
+export default function FormComponent(props) {
   const [open, setOpen] = React.useState(false);
   const [status, setStatus] = React.useState('idle');
   const [password, setPassword] = React.useState('');
   const [email, setEmail] = React.useState('')
+  const [loggedIn, setLoggedIn] = React.useState(false)
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -59,27 +60,25 @@ export default function FormComponent() {
   const signUpFetch = async () => {
     setStatus('fetching');
     const response = await fetch(
-        "/api/signup", 
-
-        {
-          method: "post",
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-        
-          //make sure to serialize your JSON body
-          body: JSON.stringify({
-            email: email,
-            password: password
-          })
-        }
-    );
+      "/api/signup", 
+      {
+        method: "post",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        //make sure to serialize your JSON body
+        body: JSON.stringify({
+          email: email,
+          password: password
+        })
+      }
+    )
     const data = await response.json();
     // setData(data.hits);
     // setStatus('fetched');
     console.log(data)
-};
+  }
 
 const cancelFetch = async () => {
   setStatus('fetching');
@@ -104,6 +103,7 @@ const cancelFetch = async () => {
   const data = await response.json();
   // setData(data.hits);
   // setStatus('fetched');
+  
   console.log(data)
 };
 
@@ -130,6 +130,7 @@ const logInFetch = async () => {
   const data = await response.json();
   // setData(data.hits);
   // setStatus('fetched');
+  props.setLoggedIn()
   console.log(data)
 };
 //   useEffect(() => {

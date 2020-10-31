@@ -60,7 +60,7 @@ function NavBar(props) {
             </Typography>
             <Typography allign="right"> <ScreenSize/></Typography>
             {/* <Button onClick={()=>props.setShowLoginPage(!props.showLoginPage)} color="inherit">Login</Button> */}
-            <FormComponent/>
+            {props.loggedIn ? <Button onClick={props.logOutFetch} color="inherit">log out</Button>:<FormComponent setLoggedIn={props.setLoggedIn}/>}
           </Toolbar>
         </AppBar>
       </div>

@@ -28,78 +28,21 @@ db.once('open', function() {
 
 var User = require('./models/User.js');
 
-// var a = new User({
-//   id:uuid4,
-//   username:'dan',
-//   password:hashh,
-// })
-// a.save()
-
-// bcrypt
 const bcrypt = require('bcrypt');
-// bcrypt.hash('myPassword', 10, function(err, hash) {
-//   // Store hash in database
-//   var uuid = require('uuid');
 
-// let uuid4 = uuid.v4();
-// console.log(uuid4)
-//   var a = new User({
-//     id:uuid4,
-//     username:'dan',
-//     password:hash,
-//   })
-//   a.save()
-// });
-
-
-// var test
-// User.findOne({id:1 }, function (err, docs) { 
-//   if (err){ 
-//       console.log(err) 
-//   } 
-//   else{ 
-//       test=docs.password
-//       // docs.username="test22"
-//       // docs.save()
-//       console.log("saved hash")
-//       console.log(docs.password)
-//       bcrypt.compare('myPasxsword', docs.password, function(err, res) {
-//         if(res) {
-//          // Passwords match
-//          console.log("they match")
-
-//         } else {
-//          // Passwords don't match
-//         } 
-//       });
-
-
-//   } 
-// }); 
-
-
-// var MyModel = mongoose.model('User', new Schema({ name: String }));
-// Works
-// MyModel.findOne(function(error, result) { /* ... */ });
 function generateAccessToken(email) {
   // expires after half and hour (1800 seconds = 30 minutes)
-  return jwt.sign(email, token_secret, { expiresIn: '10s' });
+  return jwt.sign(email, token_secret, { expiresIn: '1800s' });
 }
 function authenticateToken(req, res, next) {
-  console.log("authenticating...")
   // Gather the jwt access token from the request header
-  console.log(req)
-  console.log("zzzzzzzz")
-  console.log(req.cookies)
-  console.log("qqqqqqqqqq")
   const jwtoken = req.cookies.jwt
   console.log("sup")
   console.log(jwtoken)
   if (jwtoken == null) return res.sendStatus(401) // if there isn't any token
-
   jwt.verify(jwtoken, token_secret, (err, user) => {
     console.log(err)
-    if (err) return res.sendStatus(403)
+    if (err) return res.send({ message: 'youre not logged in' });
     req.email = user
     next() // pass the execution off to whatever request the client intended
   })
@@ -119,6 +62,10 @@ app.post('/api/private', authenticateToken, (req, res) => {
 })
 app.post('/api/hello', (req, res) => {
   res.send({ express: 'Hello From Express' });
+})
+app.post('/api/logout', (req, res) => {
+  res.cookie('jwt', "loggedOut", { httpOnly: true });
+  res.send({ message: 'logged out' })
 })
 app.post('/api/login', (req, res2) => {
   console.log("login post")
@@ -156,13 +103,10 @@ app.post('/api/login', (req, res2) => {
 })
 app.post('/api/signup', (req, res) => {
   console.log(req.body)
-
   bcrypt.hash(req.body.password, 10, function(err, hash) {
     // Store hash in database
-    var uuid = require('uuid');
-  
-  let uuid4 = uuid.v4();
-  console.log(uuid4)
+    var uuid = require('uuid'); 
+    let uuid4 = uuid.v4();
     var a = new User({
       id:uuid4,
       email:req.body.email,
@@ -170,7 +114,6 @@ app.post('/api/signup', (req, res) => {
     })
     a.save()
   });
-
   res.send({ express: 'Hello From Express' });
 });
 
