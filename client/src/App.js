@@ -11,6 +11,7 @@ import { ThemeProvider, useTheme } from '@material-ui/core/styles';
 import { light } from "@material-ui/core/styles/createPalette"
 // import createMuiTheme from '@material-ui/core/styles';
 import { unstable_createMuiStrictModeTheme as createMuiTheme } from '@material-ui/core';
+import { BrowserRouter as Router, Switch as RouterSwitch, Route, Link } from "react-router-dom";
 
 
 
@@ -83,7 +84,6 @@ class App extends React.Component{
     //put checking here
     // setData(data.hits);
     // setStatus('fetched');
-    console.log(data)
     if(data.message=="authentication successful"){
       this.setLoggedIn()
     }
@@ -143,9 +143,9 @@ class App extends React.Component{
     this.setState((state)=> {return ({showLoginPage:!state.showLoginPage})})
   }
   componentDidMount() {
-    this.callApi()
-      .then(res => this.setState({ response: res.express }))
-      .catch(err => console.log(err,"error error!"));
+    // this.callApi()
+    //   .then(res => this.setState({ response: res.message }))
+    //   .catch(err => console.log(err,"error error!"));
       this.checkLoggedInFetch()
   }
   callApi = async () => {
@@ -156,6 +156,7 @@ class App extends React.Component{
     return body;
   }
   render(){
+    console.log("render")
     console.log(this.state.response)
     const theme = createMuiTheme({
         palette: {
@@ -163,16 +164,21 @@ class App extends React.Component{
         },
       })
     return (
+      <Router>
         
         <ThemeProvider theme={theme}>
         <NavBar setLoggedIn={this.setLoggedIn} loggedIn={this.state.loggedIn} logOutFetch={this.logOutFetch} showLoginPage={this.state.showLoginPage} setShowLoginPage={this.setShowLoginPage}/>
         <Paper elevation={24} >
-        {this.state.showLoginPage ? <Paper>login <Login /></Paper>: null}
+        {this.state.showLoginPage ? <Paper> <Login /></Paper>: null}
         <Switch checked={this.state.darkMode} onChange={this.setDarkMode} />
         <Typography variant="h1">hey 1</Typography>
         <Button  onClick={this.setShowLoginPage} color="primary" variant="contained"> s</Button>
         <Button  onClick={cancelFetch} color="primary" variant="contained"> Protected </Button>
-        
+        <Route path="/about">
+            <Paper>
+              about about about
+              </Paper>
+          </Route>
         <p>hey 2</p>
         <p>hey 3</p>
         <p>hey 4</p>
@@ -181,6 +187,7 @@ class App extends React.Component{
         <Test2/>    
         </Paper>
         </ThemeProvider>
+      </Router>
     )
   }
 }

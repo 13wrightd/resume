@@ -10,6 +10,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ScreenSize from "./ScreenSize.js"
 import FormComponent from "./FormComponent.js"
+import { BrowserRouter as Router, Switch as RouterSwitch, Route, Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -50,9 +51,9 @@ function NavBar(props) {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <MenuItem onClick={handleClose}>Resume</MenuItem>
-                <MenuItem onClick={handleClose}>Projects</MenuItem>
-                <MenuItem onClick={handleClose}>About</MenuItem>
+                <MenuItem component={Link} to="/resume" onClick={handleClose}>Resume</MenuItem>
+                <MenuItem component={Link} to="/projects" onClick={handleClose}>Projects</MenuItem>
+                <MenuItem component={Link} to="/about" onClick={handleClose}>About</MenuItem>
             </Menu>
                     
             <Typography variant="h6" className={classes.title}>

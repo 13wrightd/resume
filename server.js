@@ -37,11 +37,11 @@ function generateAccessToken(email) {
 function authenticateToken(req, res, next) {
   // Gather the jwt access token from the request header
   const jwtoken = req.cookies.jwt
-  console.log("sup")
   console.log(jwtoken)
   if (jwtoken == null) return res.sendStatus(401) // if there isn't any token
   jwt.verify(jwtoken, token_secret, (err, user) => {
-    console.log(err)
+
+    console.log(user)
     if (err) return res.send({ message: 'youre not logged in' });
     req.email = user
     next() // pass the execution off to whatever request the client intended
@@ -61,7 +61,10 @@ app.post('/api/private', authenticateToken, (req, res) => {
   res.send({ message: 'authentication successful' });
 })
 app.post('/api/hello', (req, res) => {
-  res.send({ express: 'Hello From Express' });
+  res.send({ message: 'api/hello post response' });
+})
+app.get('/api/hello', (req, res) => {
+  res.send({ message: 'api/hello get response' });
 })
 app.post('/api/logout', (req, res) => {
   res.cookie('jwt', "loggedOut", { httpOnly: true });
@@ -112,21 +115,31 @@ app.post('/api/signup', (req, res) => {
       email:req.body.email,
       password:hash,
     })
-    a.save()
+    a.save((err)=>
+    {
+      if(err){
+        if(err.code==11000){
+          res.send({ message: 'Failed. That email already exists.' });
+        }
+        else{
+          res.send({ message: 'sign up not successful' });  
+        }
+      }
+      else{
+        setTimeout(()=>{
+          res.send({ message: 'sign up successful' });
+        },2000)
+      }
+    })
+    
   });
-  res.send({ express: 'Hello From Express' });
+  
+  
 });
 
 app.get('/', (req, res) => {
   console.log(req.body)
-  res.send({ express: 'Home From Express' });
-});
-
-app.post('/api/world', (req, res) => {
-  console.log(req.body);
-  res.send(
-    `I received your POST request. This is what you sent me: ${req.body.post}`,
-  );
+  res.send({ message: 'Home From Express' });
 });
 
 // var server = https.createServer(options, app);

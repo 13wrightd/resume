@@ -6,6 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // function callApi(){
 //   async () => {
@@ -18,7 +19,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 export default function FormComponent(props) {
   const [open, setOpen] = React.useState(false);
-  const [status, setStatus] = React.useState('idle');
+  const [isFetching, setIsFetching] = React.useState(false);
   const [password, setPassword] = React.useState('');
   const [email, setEmail] = React.useState('')
   const [loggedIn, setLoggedIn] = React.useState(false)
@@ -36,6 +37,7 @@ export default function FormComponent(props) {
     
 
   }
+
   const handleClose = (event) => {
     console.log("event")
     //setName(event.currentTarget.name)
@@ -53,12 +55,12 @@ export default function FormComponent(props) {
       cancelFetch()
     }
     
-    setOpen(false)
+    
     
 
   }
   const signUpFetch = async () => {
-    setStatus('fetching');
+    setIsFetching(true);
     const response = await fetch(
       "/api/signup", 
       {
@@ -75,13 +77,16 @@ export default function FormComponent(props) {
       }
     )
     const data = await response.json();
+    
+    
     // setData(data.hits);
     // setStatus('fetched');
+    setOpen(false)
+    setIsFetching(false)
     console.log(data)
   }
 
 const cancelFetch = async () => {
-  setStatus('fetching');
   const response = await fetch(
       "/api/private", 
 
@@ -103,12 +108,12 @@ const cancelFetch = async () => {
   const data = await response.json();
   // setData(data.hits);
   // setStatus('fetched');
-  
+  setOpen(false)
+  setIsFetching(false)
   console.log(data)
 };
 
 const logInFetch = async () => {
-  setStatus('fetching');
   const response = await fetch(
       "/api/login", 
 
@@ -130,7 +135,12 @@ const logInFetch = async () => {
   const data = await response.json();
   // setData(data.hits);
   // setStatus('fetched');
-  props.setLoggedIn()
+  
+  setOpen(false)
+  setIsFetching(false)
+  if(data.message=="correct password"){
+    props.setLoggedIn()
+  }
   console.log(data)
 };
 //   useEffect(() => {
@@ -144,7 +154,8 @@ const logInFetch = async () => {
         Log In
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Log In</DialogTitle>
+        <DialogTitle id="form-dialog-title">Log In </DialogTitle>
+        
         <DialogContent>
           <DialogContentText>
             Enter your email and password.
@@ -174,6 +185,7 @@ const logInFetch = async () => {
         </DialogContent>
         <DialogActions>
         {/* <div style={{flex: '1 0 0'}} > */}
+        {isFetching ? <CircularProgress /> : null}
             <Button name="cancel" onClick={handleClose} color="primary">
                 Cancel
             </Button>
@@ -181,9 +193,11 @@ const logInFetch = async () => {
             <Button name="signup" onClick={handleClose} color="primary">
                 Sign up
             </Button>
+            
             <Button  name="login" variant="contained" onClick={handleClose} color="primary">
                 Log in
             </Button>
+            
         </DialogActions>
       </Dialog>
     </div>
