@@ -1,11 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: react1
+  name: nodejs
 spec:
   selector:
     matchLabels:
-      app: node
+      app: nodejs
   replicas: 2
   template:
     metadata:
@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: react
-        image: 13wrightd/react
+        image: 13wrightd/react3
         ports:
         - containerPort: 5000

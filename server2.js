@@ -5,6 +5,10 @@ var cookieParser = require('cookie-parser')
 const https = require('https');
 const fs = require('fs');
 const jwt = require("jsonwebtoken");
+
+const uuid = require('uuid'); 
+const serverID = uuid.v4();
+
 // var key = fs.readFileSync(__dirname + '/selfsigned.key');
 // var cert = fs.readFileSync(__dirname + '/selfsigned.crt');
 // var options = {
@@ -58,7 +62,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/api/private', authenticateToken, (req, res) => {
   console.log("authentication successful")
-  res.send({ message: 'authentication successful' });
+  res.send({ message: 'authentication successful',
+serverid:serverID });
 })
 app.post('/api/hello', (req, res) => {
   res.send({ message: 'api/hello post response' });
@@ -108,7 +113,7 @@ app.post('/api/signup', (req, res) => {
   console.log(req.body)
   bcrypt.hash(req.body.password, 10, function(err, hash) {
     // Store hash in database
-    var uuid = require('uuid'); 
+    
     let uuid4 = uuid.v4();
     var a = new User({
       id:uuid4,
@@ -135,7 +140,11 @@ app.post('/api/signup', (req, res) => {
 });
 const path = require('path');
 app.get('/', (req,res) =>{
-    res.sendFile(path.join(__dirname+'/client/build/index.html'));
+  res.sendFile(path.join(__dirname+'/client/build/index.html'));
+});
+app.get('/crash', (req,res) =>{
+  process.nextTick(function () {
+  throw new Error('We crashed!!!!!')})
 });
 app.use("/", express.static('client/build'))
 
