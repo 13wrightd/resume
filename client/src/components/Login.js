@@ -27,7 +27,7 @@ function Login(){
                 </Box>
             </Grid>
             
-            <Hidden xsDown><Grid  item sm={1} md={2}>rigsht right right right right right right right right right right </Grid></Hidden>
+            <Hidden xsDown><Grid  item sm={1} md={2}><Box width="100%" height="100%" bgcolor="secondary.main">right right right right right right right right right right right </Box></Grid></Hidden>
         </Grid>
     )
 }

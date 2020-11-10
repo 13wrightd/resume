@@ -5,12 +5,12 @@ var cookieParser = require('cookie-parser')
 const https = require('https');
 const fs = require('fs');
 const jwt = require("jsonwebtoken");
-var key = fs.readFileSync(__dirname + '/selfsigned.key');
-var cert = fs.readFileSync(__dirname + '/selfsigned.crt');
-var options = {
-  key: key,
-  cert: cert
-};
+// var key = fs.readFileSync(__dirname + '/selfsigned.key');
+// var cert = fs.readFileSync(__dirname + '/selfsigned.crt');
+// var options = {
+//   key: key,
+//   cert: cert
+// };
 const token_secret = "sd42fsd2j12738gasd34fas41dfasd" //this needs to be changed to something more random and defined in another file.
 
 // DB connect 
@@ -23,7 +23,7 @@ mongoose.connect(dbString, { useNewUrlParser: true,
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-  console.log("connected")
+  console.log("database connected")
 });
 
 var User = require('./models/User.js');
@@ -139,7 +139,7 @@ app.post('/api/signup', (req, res) => {
 
 app.get('/', (req, res) => {
   console.log(req.body)
-  res.send({ message: 'Home From Express' });
+  res.sendFile({ message: 'Home From Express' });
 });
 
 // var server = https.createServer(options, app);

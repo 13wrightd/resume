@@ -5,37 +5,20 @@ import { Box, Button, Switch, Paper, Typography } from "@material-ui/core/"
 import NavBar from "./components/NavBar.js"
 import Login from "./components/Login.js"
 import FormComponent from "./components/FormComponent.js"
-import Test from "./components/Test.js"
-import Test2 from "./components/Test2.js"
+import EmptyComponent from "./components/EmptyComponent.js"
+
 import { ThemeProvider, useTheme } from '@material-ui/core/styles';
 import { light } from "@material-ui/core/styles/createPalette"
 // import createMuiTheme from '@material-ui/core/styles';
 import { unstable_createMuiStrictModeTheme as createMuiTheme } from '@material-ui/core';
 import { BrowserRouter as Router, Switch as RouterSwitch, Route, Link } from "react-router-dom";
 
+import About from "./routes/About.js" 
+import Projects from "./routes/Projects.js"
+import Home from "./routes/Home.js" 
+import Resume from "./routes/Resume.js" 
+import Test from "./routes/Test.js" 
 
-
-const cancelFetch = async () => {
-  
-  const response = await fetch(
-      "/api/private", 
-      {
-        credentials: 'include',
-        method: "post",
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        //make sure to serialize your JSON body
-        body: JSON.stringify({
-        })
-      }
-  );
-  const data = await response.json();
-  // setData(data.hits);
-  // setStatus('fetched');
-  console.log(data)
-};
 class App extends React.Component{
   // const [darkMode, setDarkMode] = useState(false)
   // const [showLoginPage, setShowLoginPage] = useState(true)
@@ -55,7 +38,6 @@ class App extends React.Component{
       loggedIn: false
     }
     this.setDarkMode = this.setDarkMode.bind(this)
-    this.setShowLoginPage = this.setShowLoginPage.bind(this)
     this.logOutFetch = this.logOutFetch.bind(this)
     this.setLoggedIn = this.setLoggedIn.bind(this)
     this.checkLoggedInFetch = this.checkLoggedInFetch.bind(this)
@@ -139,9 +121,7 @@ class App extends React.Component{
       })
     })
   }
-  setShowLoginPage(){
-    this.setState((state)=> {return ({showLoginPage:!state.showLoginPage})})
-  }
+  
   componentDidMount() {
     // this.callApi()
     //   .then(res => this.setState({ response: res.message }))
@@ -164,30 +144,21 @@ class App extends React.Component{
         },
       })
     return (
-      <Router>
+      
         
         <ThemeProvider theme={theme}>
-        <NavBar setLoggedIn={this.setLoggedIn} loggedIn={this.state.loggedIn} logOutFetch={this.logOutFetch} showLoginPage={this.state.showLoginPage} setShowLoginPage={this.setShowLoginPage}/>
-        <Paper elevation={24} >
-        {this.state.showLoginPage ? <Paper> <Login /></Paper>: null}
-        <Switch checked={this.state.darkMode} onChange={this.setDarkMode} />
-        <Typography variant="h1">hey 1</Typography>
-        <Button  onClick={this.setShowLoginPage} color="primary" variant="contained"> s</Button>
-        <Button  onClick={cancelFetch} color="primary" variant="contained"> Protected </Button>
-        <Route path="/about">
-            <Paper>
-              about about about
-              </Paper>
-          </Route>
-        <p>hey 2</p>
-        <p>hey 3</p>
-        <p>hey 4</p>
-        <p>hey 5</p>
-        <Test/>
-        <Test2/>    
-        </Paper>
+        <Router>
+          <NavBar setLoggedIn={this.setLoggedIn} loggedIn={this.state.loggedIn} logOutFetch={this.logOutFetch} showLoginPage={this.state.showLoginPage} setShowLoginPage={this.setShowLoginPage}/>
+          <Paper elevation={24} >
+            <Switch checked={this.state.darkMode} onChange={this.setDarkMode} />
+          </Paper>
+          <Route path="/about" component={About}/>
+          <Route path="/projects" component={Projects}/>
+          <Route path="/home" component={Home}/>
+          <Route path="/resume" component={Resume}/>
+          <Route path="/test" component={Test}/>
+        </Router>
         </ThemeProvider>
-      </Router>
     )
   }
 }

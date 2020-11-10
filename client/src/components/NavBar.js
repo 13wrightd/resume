@@ -54,6 +54,7 @@ function NavBar(props) {
                 <MenuItem component={Link} to="/resume" onClick={handleClose}>Resume</MenuItem>
                 <MenuItem component={Link} to="/projects" onClick={handleClose}>Projects</MenuItem>
                 <MenuItem component={Link} to="/about" onClick={handleClose}>About</MenuItem>
+                <MenuItem component={Link} to="/test" onClick={handleClose}>Test</MenuItem>
             </Menu>
                     
             <Typography variant="h6" className={classes.title}>
