@@ -5,7 +5,6 @@
 /client/.pnp
 /client/.pnp.js
 /node_modules
-/build
 /client/build
 #config
 config.js

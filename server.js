@@ -139,7 +139,7 @@ app.post('/api/signup', (req, res) => {
 
 app.get('/', (req, res) => {
   console.log(req.body)
-  res.sendFile({ message: 'Home From Express' });
+  res.send({ message: 'Home From Express' });
 });
 
 // var server = https.createServer(options, app);
