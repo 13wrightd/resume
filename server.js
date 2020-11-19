@@ -5,6 +5,10 @@ var cookieParser = require('cookie-parser')
 const https = require('https');
 const fs = require('fs');
 const jwt = require("jsonwebtoken");
+
+const uuid = require('uuid'); 
+const serverID = uuid.v4();
+
 // var key = fs.readFileSync(__dirname + '/selfsigned.key');
 // var cert = fs.readFileSync(__dirname + '/selfsigned.crt');
 // var options = {
@@ -42,7 +46,10 @@ function authenticateToken(req, res, next) {
   jwt.verify(jwtoken, token_secret, (err, user) => {
 
     console.log(user)
-    if (err) return res.send({ message: 'youre not logged in' });
+    if (err) return res.send({ 
+      message: 'youre not logged in',
+      serverid:serverID 
+    });
     req.email = user
     next() // pass the execution off to whatever request the client intended
   })
@@ -58,13 +65,32 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/api/private', authenticateToken, (req, res) => {
   console.log("authentication successful")
-  res.send({ message: 'authentication successful' });
+  res.send({ message: 'authentication successful',
+serverid:serverID });
 })
 app.post('/api/hello', (req, res) => {
-  res.send({ message: 'api/hello post response' });
+  res.send({ 
+    message: 'api/hello get response',
+    server_id: serverID 
+  });
 })
 app.get('/api/hello', (req, res) => {
-  res.send({ message: 'api/hello get response' });
+  res.send({ 
+    message: 'api/hello get response',
+    server_id: serverID
+  });
+})
+app.get('/api/getserver', (req, res) => {
+  res.send(serverID);
+})
+app.get('/api/getshareddata', (req, res) => {
+  try{
+    console.log("sent shared file")
+    res.sendFile("/usr/share/nginx/html/index.html");
+  }
+  catch{
+    console.log("tried to send file")
+  }
 })
 app.post('/api/logout', (req, res) => {
   res.cookie('jwt', "loggedOut", { httpOnly: true });
@@ -108,7 +134,7 @@ app.post('/api/signup', (req, res) => {
   console.log(req.body)
   bcrypt.hash(req.body.password, 10, function(err, hash) {
     // Store hash in database
-    var uuid = require('uuid'); 
+    
     let uuid4 = uuid.v4();
     var a = new User({
       id:uuid4,
@@ -131,16 +157,19 @@ app.post('/api/signup', (req, res) => {
         },2000)
       }
     })
-    
   });
-  
-  
 });
 
-app.get('/', (req, res) => {
-  console.log(req.body)
-  res.send({ message: 'Home From Express' });
+app.get('/crash', (req,res) =>{
+  process.nextTick(function () {
+  throw new Error('We crashed!!!!!')})
 });
+
+const path = require('path');
+app.use(express.static(path.join(__dirname, 'client/build')));
+app.get('/*', function (req, res) {
+   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+ });
 
 // var server = https.createServer(options, app);
 

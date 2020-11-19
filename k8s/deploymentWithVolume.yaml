@@ -21,6 +21,16 @@ spec:
         volumeMounts:
         - name: shared-data
           mountPath: /usr/share/nginx/html
+        - name: mypd
+          mountPath: "/tmp/persistent"
+        - name: nfs-data
+          mountPath: "/nfs/"
       volumes:
       - name: shared-data
         emptyDir: {}
+      - name: mypd
+        persistentVolumeClaim:
+          claimName: myclaim
+      - name: nfs-data
+        persistentVolumeClaim:
+          claimName: nfsclaim
