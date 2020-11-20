@@ -168,6 +168,7 @@ app.get('/crash', (req,res) =>{
 const path = require('path');
 app.use(express.static(path.join(__dirname, 'client/build')));
 app.get('/*', function (req, res) {
+  console.log("sending client/build")
    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
  });
 
