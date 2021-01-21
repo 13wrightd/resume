@@ -9,6 +9,7 @@ function Resume(){
                 <Paper>
                     <Typography variant="h2"> Resume </Typography>
                     my resume
+                    <code>code test</code>
                 </Paper>
             </Grid>
             <Grid item xs={2}></Grid>
