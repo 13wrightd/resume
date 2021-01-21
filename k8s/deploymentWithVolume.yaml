@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: node-example
-        image: 13wrightd/react3
+        image: 13wrightd/resumearch
         imagePullPolicy: Always
         ports:
         - containerPort: 5002

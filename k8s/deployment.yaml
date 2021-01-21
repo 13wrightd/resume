@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: node-deployment
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: node-example
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: node-example
-        image: 13wrightd/react3
+        image: 13wrightd/resumearch:2.0
         imagePullPolicy: Always
         ports:
         - containerPort: 5002
