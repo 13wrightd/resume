@@ -7,6 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Modal from '@material-ui/core/Modal';
 
 const useStyles = makeStyles({
   root: {
@@ -16,7 +17,14 @@ const useStyles = makeStyles({
 
 export default function Project(props) {
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <Card className={classes.root}>
       <CardActionArea>
@@ -40,9 +48,17 @@ export default function Project(props) {
         <Button size="small" color="primary">
           Share
         </Button>
-        <Button size="small" color="primary">
+
+        <Button onClick={handleOpen} size="small" color="primary">
           Learn More
         </Button>
+        <Modal
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+          open={open}
+          onClose={handleClose} >
+            <h2>Simple React Modal</h2>
+        </Modal>
       </CardActions>
     </Card>
   );

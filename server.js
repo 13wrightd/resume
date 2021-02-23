@@ -41,6 +41,7 @@ function generateAccessToken(email) {
 function authenticateToken(req, res, next) {
   // Gather the jwt access token from the request header
   const jwtoken = req.cookies.jwt
+  console.log('jwt:')
   console.log(jwtoken)
   if (jwtoken == null) return res.sendStatus(401) // if there isn't any token
   jwt.verify(jwtoken, token_secret, (err, user) => {
@@ -98,12 +99,19 @@ app.post('/api/logout', (req, res) => {
 })
 app.post('/api/login', (req, res2) => {
   console.log("login post")
+  console.log(req.body.email)
   console.log(req.body.password)
+  console.log("done")
+  
 
   User.findOne({email:req.body.email}, function (err, docs) { 
     if (err){ 
         console.log(err) 
     } 
+    else if(!docs){
+      console.log("User doesnt exist")
+      res2.send({ message: 'user doesnt exist' });
+    }
     else{ 
       test=docs.password
       // docs.username="test22"
@@ -167,10 +175,10 @@ app.get('/crash', (req,res) =>{
 
 const path = require('path');
 app.use(express.static(path.join(__dirname, 'client/build')));
-app.get('/*', function (req, res) {
-  console.log("sending client/build")
-   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
- });
+// app.get('/*', function (req, res) {
+//   console.log("sending client/build")
+//    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+//  });
 
 // var server = https.createServer(options, app);
 
