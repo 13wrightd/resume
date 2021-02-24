@@ -8,7 +8,17 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
+import Paper from '@material-ui/core/Paper';
+import ProjectPage from './ProjectPage.js'
+// function getModalStyle() {
+//   const top = 300;
+//   const left = 300;
 
+//   return {
+//     top: `${top}%`,
+//     left: `${left}%`
+//   };
+// }
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
@@ -17,14 +27,15 @@ const useStyles = makeStyles({
 
 export default function Project(props) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
+  // const [open, setOpen] = React.useState(false);
+  // const handleOpen = () => {
+  //   setOpen(true);
+  // };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
+  // const [modalStyle] = React.useState(getModalStyle);
   return (
     <Card className={classes.root}>
       <CardActionArea>
@@ -48,17 +59,7 @@ export default function Project(props) {
         <Button size="small" color="primary">
           Share
         </Button>
-
-        <Button onClick={handleOpen} size="small" color="primary">
-          Learn More
-        </Button>
-        <Modal
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-          open={open}
-          onClose={handleClose} >
-            <h2>Simple React Modal</h2>
-        </Modal>
+        <ProjectPage/>
       </CardActions>
     </Card>
   );
