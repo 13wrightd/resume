@@ -9,6 +9,7 @@ const jwt = require("jsonwebtoken");
 const uuid = require('uuid'); 
 const serverID = uuid.v4();
 
+
 // var key = fs.readFileSync(__dirname + '/selfsigned.key');
 // var cert = fs.readFileSync(__dirname + '/selfsigned.crt');
 // var options = {
@@ -84,6 +85,10 @@ app.get('/api/hello', (req, res) => {
 app.get('/api/getserver', (req, res) => {
   res.send(serverID);
 })
+app.get('/d', (req, res) => {
+  console.log("file");
+  res.sendFile("./client/src/WrightDanielResume.pdf");
+})
 app.get('/api/getshareddata', (req, res) => {
   try{
     console.log("sent shared file")
@@ -98,12 +103,7 @@ app.post('/api/logout', (req, res) => {
   res.send({ message: 'logged out' })
 })
 app.post('/api/login', (req, res2) => {
-  console.log("login post")
-  console.log(req.body.email)
-  console.log(req.body.password)
-  console.log("done")
-  
-
+  console.log("POST /api/login")
   User.findOne({email:req.body.email}, function (err, docs) { 
     if (err){ 
         console.log(err) 
@@ -121,18 +121,18 @@ app.post('/api/login', (req, res2) => {
       bcrypt.compare(req.body.password, docs.password, function(err, res) {
         if(res) {
           // Passwords match
-          console.log("they match")
+          console.log("correct password")
           const jwt = generateAccessToken({ email: req.body.email });
           //res2.json(token);
-          
+      
            res2.cookie('jwt', jwt, { httpOnly: true });
           
           res2.json({ message: 'correct password' });
         } 
         else {
           // Passwords don't match
-          console.log("wrong password")
-          res2.send({ message: 'bad password' });
+          console.log("incorrect password")
+          res2.send({ message: 'incorrect password' });
         }
       })
     }
