@@ -35,34 +35,35 @@ function NavBar(props) {
     };
     const handleClose = () => {
         setAnchorEl(null);
+        // props.showNavBar(false)
     };
     
     return (
       <div className={classes.root}>
-        <AppBar  position="static">
+        <AppBar position="static">
           <Toolbar>
             <IconButton edge="start" onClick={handleClick} className={classes.menuButton} color="inherit" aria-label="menu">
                 <MenuIcon />
             </IconButton>
-            <Menu 
+            <Menu  
                 id="simple-menu"
                 anchorEl={anchorEl}
                 keepMounted
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <MenuItem component={Link} to="/resume" onClick={handleClose}>Resume</MenuItem>
+                <MenuItem  onClick={handleClose}><a target="_self" style={{'textDecoration': 'none', 'color':'black'}} href="http://danielwright.tk/resume.pdf">Resume</a></MenuItem>
                 <MenuItem component={Link} to="/projects" onClick={handleClose}>Projects</MenuItem>
                 <MenuItem component={Link} to="/about" onClick={handleClose}>About</MenuItem>
                 <MenuItem component={Link} to="/test" onClick={handleClose}>Test</MenuItem>
             </Menu>
                     
             <Typography variant="h6" className={classes.title}>
-              Daniel Wright
+              Daniel Wright {AppBar.height}
             </Typography>
             <Typography allign="right"> <ScreenSize/></Typography>
-            {/* <Button onClick={()=>props.setShowLoginPage(!props.showLoginPage)} color="inherit">Login</Button> */}
-            {props.loggedIn ? <Button onClick={props.logOutFetch} color="inherit">log out</Button>:<FormComponent setLoggedIn={props.setLoggedIn}/>}
+            <Button onClick={()=>props.setShowLoginPage(!props.showLoginPage)} color="inherit">Login</Button>
+            {/* {props.loggedIn ? <Button onClick={props.logOutFetch} color="inherit">log out</Button>:<FormComponent setLoggedIn={props.setLoggedIn}/>} */}
           </Toolbar>
         </AppBar>
       </div>
