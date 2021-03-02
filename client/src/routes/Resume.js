@@ -2,7 +2,6 @@ import React from "react"
 import { Paper, Button, Grid, Hidden, TextField, Typography, Box} from "@material-ui/core"
 import { withStyles } from '@material-ui/styles';
 import pdfFile from "../WrightDanielResume.pdf"
-import './Resume.css';
 const styles = (theme) => ({
     toolbar: theme.mixins.Toolbar,
 
