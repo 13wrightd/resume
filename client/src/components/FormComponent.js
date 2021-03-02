@@ -13,7 +13,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 //   const response = await fetch('/api/hello');
 //   const body = await response.json();
 //   if (response.status !== 200) throw Error(body.message);
-  
+
 //   return body;
 // }}
 
@@ -28,13 +28,13 @@ export default function FormComponent(props) {
   };
   const handleChange = (event) => {
     console.log(event.target.value)
-    if(event.target.name=="email"){
+    if (event.target.name == "email") {
       setEmail(event.target.value)
     }
-    else if(event.target.name=="password"){
+    else if (event.target.name == "password") {
       setPassword(event.target.value)
     }
-    
+
 
   }
 
@@ -42,27 +42,27 @@ export default function FormComponent(props) {
     console.log("event")
     //setName(event.currentTarget.name)
     console.log(event.currentTarget.name)
-    if(event.currentTarget.name=="signup"){
-        console.log("signup fetch")
-        signUpFetch()
+    if (event.currentTarget.name == "signup") {
+      console.log("signup fetch")
+      signUpFetch()
     }
-    else if(event.currentTarget.name=="login"){
+    else if (event.currentTarget.name == "login") {
       console.log("login fetch")
       logInFetch()
     }
-    else if(event.currentTarget.name=="cancel"){
+    else if (event.currentTarget.name == "cancel") {
       console.log("cancel fetch")
       cancelFetch()
     }
-    
-    
-    
+
+
+
 
   }
   const signUpFetch = async () => {
     setIsFetching(true);
     const response = await fetch(
-      "/api/signup", 
+      "/api/signup",
       {
         method: "post",
         headers: {
@@ -77,8 +77,8 @@ export default function FormComponent(props) {
       }
     )
     const data = await response.json();
-    
-    
+
+
     // setData(data.hits);
     // setStatus('fetched');
     setOpen(false)
@@ -86,9 +86,9 @@ export default function FormComponent(props) {
     console.log(data)
   }
 
-const cancelFetch = async () => {
-  const response = await fetch(
-      "/api/private", 
+  const cancelFetch = async () => {
+    const response = await fetch(
+      "/api/private",
 
       {
         credentials: 'include',
@@ -97,25 +97,25 @@ const cancelFetch = async () => {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-      
+
         //make sure to serialize your JSON body
         body: JSON.stringify({
           email: email,
           password: password
         })
       }
-  );
-  const data = await response.json();
-  // setData(data.hits);
-  // setStatus('fetched');
-  setOpen(false)
-  setIsFetching(false)
-  console.log(data)
-};
+    );
+    const data = await response.json();
+    // setData(data.hits);
+    // setStatus('fetched');
+    setOpen(false)
+    setIsFetching(false)
+    console.log(data)
+  };
 
-const logInFetch = async () => {
-  const response = await fetch(
-      "/api/login", 
+  const logInFetch = async () => {
+    const response = await fetch(
+      "/api/login",
 
       {
         credentials: 'include',
@@ -124,30 +124,30 @@ const logInFetch = async () => {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-      
+
         //make sure to serialize your JSON body
         body: JSON.stringify({
           email: email,
           password: password
         })
       }
-  );
-  const data = await response.json();
-  // setData(data.hits);
-  // setStatus('fetched');
-  
-  setOpen(false)
-  setIsFetching(false)
-  if(data.message=="correct password"){
-    props.setLoggedIn()
-  }
-  console.log(data)
-};
-//   useEffect(() => {
-    
+    );
+    const data = await response.json();
+    // setData(data.hits);
+    // setStatus('fetched');
 
-//     fetchData();
-// }, []);
+    setOpen(false)
+    setIsFetching(false)
+    if (data.message == "correct password") {
+      props.setLoggedIn()
+    }
+    console.log(data)
+  };
+  //   useEffect(() => {
+
+
+  //     fetchData();
+  // }, []);
   return (
     <div>
       <Button color="inherit" onClick={handleClickOpen}>
@@ -155,7 +155,7 @@ const logInFetch = async () => {
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Log In </DialogTitle>
-        
+
         <DialogContent>
           <DialogContentText>
             Enter your email and password.
@@ -172,7 +172,7 @@ const logInFetch = async () => {
             fullWidth
           />
           <TextField
-            
+
             margin="dense"
             id="password"
             name="password"
@@ -184,20 +184,20 @@ const logInFetch = async () => {
           />
         </DialogContent>
         <DialogActions>
-        {/* <div style={{flex: '1 0 0'}} > */}
-        {isFetching ? <CircularProgress /> : null}
-            <Button name="cancel" onClick={handleClose} color="primary">
-                Cancel
+          {/* <div style={{flex: '1 0 0'}} > */}
+          {isFetching ? <CircularProgress /> : null}
+          <Button name="cancel" onClick={handleClose} color="primary">
+            Cancel
             </Button>
-            {/* </div> */}
-            <Button name="signup" onClick={handleClose} color="primary">
-                Sign up
+          {/* </div> */}
+          <Button name="signup" onClick={handleClose} color="primary">
+            Sign up
             </Button>
-            
-            <Button  name="login" variant="contained" onClick={handleClose} color="primary">
-                Log in
+
+          <Button name="login" variant="contained" onClick={handleClose} color="primary">
+            Log in
             </Button>
-            
+
         </DialogActions>
       </Dialog>
     </div>

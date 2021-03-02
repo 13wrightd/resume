@@ -1,7 +1,7 @@
 import React from "react"
-import { Paper, Button, Grid, Hidden, TextField, Typography, Box} from "@material-ui/core"
+import { Paper, Button, Grid, Hidden, TextField, Typography, Box } from "@material-ui/core"
 
-function About(){
+function About() {
     return (
         <Grid container>
             <Grid item xs={2}></Grid>
@@ -13,12 +13,12 @@ function About(){
                     <Typography variant="h2">About me</Typography>
                         I've built a variety of other applications ranging from hardware to software, and other webapps:
                             mysql, apache, and php
-                            MEAN 
+                            MEAN
                             websockets
                 </Paper>
             </Grid>
             <Grid item xs={2}></Grid>
-            
+
         </Grid>
     )
 }

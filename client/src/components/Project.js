@@ -59,7 +59,7 @@ export default function Project(props) {
         <Button size="small" color="primary">
           Share
         </Button>
-        <ProjectPage/>
+        <ProjectPage />
       </CardActions>
     </Card>
   );

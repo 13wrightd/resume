@@ -1,9 +1,9 @@
 import React, { useState } from "react"
 // import { Paper, Button, Grid, Hidden, TextField, Typography, Box} from "@material-ui/core"
 
-function Test(){
+function Test() {
     const [open, setOpen] = React.useState(false);
-    return(
+    return (
         <div>
         </div>
     )

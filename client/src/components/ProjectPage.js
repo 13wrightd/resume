@@ -54,21 +54,21 @@ export default function SimpleModal() {
 
   return (
     <div>
-        <Button onClick={handleOpen} size="small" color="primary">
-          Learn More
+      <Button onClick={handleOpen} size="small" color="primary">
+        Learn More
         </Button>
-    
-        <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="simple-modal-title"
-            aria-describedby="simple-modal-description"
-        >
-        
-            <div style={modalStyle} className={classes.paper}>
-                <h2 id="simple-modal-title">Text in a modal</h2>
-                <p id="simple-modal-description">
-                    asdasdasdsa
+
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+
+        <div style={modalStyle} className={classes.paper}>
+          <h2 id="simple-modal-title">Text in a modal</h2>
+          <p id="simple-modal-description">
+            asdasdasdsa
                 </p>
         </div>
       </Modal>

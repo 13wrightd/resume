@@ -1,12 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser')
- 
+
 const https = require('https');
 const fs = require('fs');
 const jwt = require("jsonwebtoken");
 
-const uuid = require('uuid'); 
+const uuid = require('uuid');
 const serverID = uuid.v4();
 
 
@@ -22,12 +22,14 @@ const token_secret = "sd42fsd2j12738gasd34fas41dfasd" //this needs to be changed
 var mongoose = require('mongoose');
 const dbString = require("./config.js")
 
-mongoose.connect(dbString, { useNewUrlParser: true,
+mongoose.connect(dbString, {
+  useNewUrlParser: true,
   useUnifiedTopology: true,
-  useCreateIndex: true});
+  useCreateIndex: true
+});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
+db.once('open', function () {
   console.log("database connected")
 });
 
@@ -48,9 +50,9 @@ function authenticateToken(req, res, next) {
   jwt.verify(jwtoken, token_secret, (err, user) => {
 
     console.log(user)
-    if (err) return res.send({ 
+    if (err) return res.send({
       message: 'youre not logged in',
-      serverid:serverID 
+      serverid: serverID
     });
     req.email = user
     next() // pass the execution off to whatever request the client intended
@@ -67,17 +69,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/api/private', authenticateToken, (req, res) => {
   console.log("authentication successful")
-  res.send({ message: 'authentication successful',
-serverid:serverID });
+  res.send({
+    message: 'authentication successful',
+    serverid: serverID
+  });
 })
 app.post('/api/hello', (req, res) => {
-  res.send({ 
-    message: 'api/hello get response',
-    server_id: serverID 
+  res.send({
+    message: 'api/hello post response',
+    server_id: serverID
   });
 })
 app.get('/api/hello', (req, res) => {
-  res.send({ 
+  res.send({
     message: 'api/hello get response',
     server_id: serverID
   });
@@ -90,11 +94,11 @@ app.get('/d', (req, res) => {
   res.sendFile("./client/src/WrightDanielResume.pdf");
 })
 app.get('/api/getshareddata', (req, res) => {
-  try{
+  try {
     console.log("sent shared file")
     res.sendFile("/usr/share/nginx/html/index.html");
   }
-  catch{
+  catch {
     console.log("tried to send file")
   }
 })
@@ -104,31 +108,31 @@ app.post('/api/logout', (req, res) => {
 })
 app.post('/api/login', (req, res2) => {
   console.log("POST /api/login")
-  User.findOne({email:req.body.email}, function (err, docs) { 
-    if (err){ 
-        console.log(err) 
-    } 
-    else if(!docs){
+  User.findOne({ email: req.body.email }, function (err, docs) {
+    if (err) {
+      console.log(err)
+    }
+    else if (!docs) {
       console.log("User doesnt exist")
       res2.send({ message: 'user doesnt exist' });
     }
-    else{ 
-      test=docs.password
+    else {
+      test = docs.password
       // docs.username="test22"
       // docs.save()
       console.log("saved hash")
       console.log(docs.password)
-      bcrypt.compare(req.body.password, docs.password, function(err, res) {
-        if(res) {
+      bcrypt.compare(req.body.password, docs.password, function (err, res) {
+        if (res) {
           // Passwords match
           console.log("correct password")
           const jwt = generateAccessToken({ email: req.body.email });
           //res2.json(token);
-      
-           res2.cookie('jwt', jwt, { httpOnly: true });
-          
+
+          res2.cookie('jwt', jwt, { httpOnly: true });
+
           res2.json({ message: 'correct password' });
-        } 
+        }
         else {
           // Passwords don't match
           console.log("incorrect password")
@@ -136,41 +140,41 @@ app.post('/api/login', (req, res2) => {
         }
       })
     }
-  }) 
+  })
 })
 app.post('/api/signup', (req, res) => {
   console.log(req.body)
-  bcrypt.hash(req.body.password, 10, function(err, hash) {
+  bcrypt.hash(req.body.password, 10, function (err, hash) {
     // Store hash in database
-    
+
     let uuid4 = uuid.v4();
     var a = new User({
-      id:uuid4,
-      email:req.body.email,
-      password:hash,
+      id: uuid4,
+      email: req.body.email,
+      password: hash,
     })
-    a.save((err)=>
-    {
-      if(err){
-        if(err.code==11000){
+    a.save((err) => {
+      if (err) {
+        if (err.code == 11000) {
           res.send({ message: 'Failed. That email already exists.' });
         }
-        else{
-          res.send({ message: 'sign up not successful' });  
+        else {
+          res.send({ message: 'sign up not successful' });
         }
       }
-      else{
-        setTimeout(()=>{
+      else {
+        setTimeout(() => {
           res.send({ message: 'sign up successful' });
-        },2000)
+        }, 2000)
       }
     })
   });
 });
 
-app.get('/crash', (req,res) =>{
+app.get('/crash', (req, res) => {
   process.nextTick(function () {
-  throw new Error('We crashed!!!!!')})
+    throw new Error('We crashed!!!!!')
+  })
 });
 
 const path = require('path');
