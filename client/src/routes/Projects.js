@@ -7,17 +7,15 @@ import flappy from "../images/flappy.gif"
 import tetris from "../images/tetris.gif"
 import LoLN from "../images/LoLN.gif"
 import projection from "../images/projection.gif"
+import textify from "../images/textify.gif"
 function Projects() {
     //const projectData = [["Project 1",image], ["Project 2",image]]
     const projectData = [
-        ["Flappy Bird", flappy, "Flappy bird"],
-        ["3D Projections", projection, "description"],
-        ["Tetris", tetris, "Tetris with pygame"],
-        ["Law of Large Numbers", LoLN, "The Law of Large Numbers is a statistical concept that.... This is a simulation that uses a pseudo-random number generator to demonstrate that a coin toss if repeated enough times tends to converge to 50% heads, the theoretical probability.",],
-        ["Project 5", image, "Methods are commonly divided into linear and non-linear approaches.[1] Approaches can also be divided into feature selection and feature extraction.[2] Dimensionality reduction can be used for noise reduction, data visualization, cluster analysis, or as an intermediate step to facilitate other analyses."],
-        ["Project 6", image, "Feature selection approaches try to find a subset of the input variables (also called features or attributes). "],
-        ["Project 7", image, "The three strategies are: the filter strategy (e.g. information gain), the wrapper strategy (e.g. search guided by accuracy), and the embedded strategy (selected features add or are removed while building the model based on prediction errors)."],
-        ["Project 8", image, "Data analysis such as regression or classification can be done in the reduced space more accurately than in the original space"]
+        ["Flappy Bird", flappy, "Flappy Bird, a recreation of popular iPhone app."],
+        ["3D Projections", projection, "A 3D rendering program that uses projections and a virtual camera to draw 3-dimensional objects."],
+        ["Tetris", tetris, "A remake of the game Tetris with "],
+        ["Law of Large Numbers", LoLN, "The Law of Large Numbers is the statistical concept that as more trials take place, the experimental results should get closer to the theoretical probabilities. This is a simulation that uses a pseudo-random number generator to demonstrate that a coin toss if repeated enough times tends to converge to 50% heads, the theoretical probability.",],
+        ["Textify", textify, "Textify is a web app designed to help users create playlists, share them, chat with others, and even listen to the playlists together in a synchronized way across as many users needed. Node, Express, Angular, MongoDB, and Socket.IO was used to create this application along with the Youtube API for retrieving videos."]
     ]
     const projectComponents = projectData.map(item => {
         return (
